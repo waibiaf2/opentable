@@ -1,4 +1,3 @@
-import React from 'react';
 import MenuCard from "@/app/restaurant/[slug]/components/MenuCard";
 
 const Menu = () => {
