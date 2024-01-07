@@ -4,6 +4,12 @@ import NavBar from "@/app/components/NavBar";
 import Header from "@/app/search/components/Header";
 import SearchSidebar from "@/app/search/components/SearchSidebar";
 import RestaurantCard from "@/app/search/components/RestaurantCard";
+import {Metadata} from "next";
+
+export const metadata:Metadata = {
+	title: "Search",
+	description: "The search page of the OpenTables system"
+}
 
 const Search = () => {
 	return (

@@ -1,5 +1,14 @@
 import React, {Fragment} from 'react';
 import Header from "./components/Header";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+	title: {
+		template: '%s | OpenTables',
+		default: 'Restaurant',
+	},
+	description: 'A restaurant reservation system',
+}
 
 const RestaurantLayout = (
 	{children,}:{

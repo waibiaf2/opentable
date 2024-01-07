@@ -6,6 +6,14 @@ import Description from "@/app/restaurant/[slug]/components/Description";
 import Images from "@/app/restaurant/[slug]/components/Images";
 import Reviews from "@/app/restaurant/[slug]/components/Reviews";
 import ReservationCard from "@/app/restaurant/[slug]/components/ReservationCard";
+import {Metadata} from "next";
+
+
+export const metadata: Metadata = {
+	title: "Millstone Grill(Toronto)",
+	description: "The search page of the OpenTables system"
+}
+
 
 const RestaurantDetails = () => {
 	return (
