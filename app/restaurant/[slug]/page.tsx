@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import RestaurantNavBar from "@/app/restaurant/[slug]/components/RestaurantNavBar";
 import Title from "@/app/restaurant/[slug]/components/Title";
 import Ratings from "@/app/restaurant/[slug]/components/Ratings";
@@ -7,6 +7,39 @@ import Images from "@/app/restaurant/[slug]/components/Images";
 import Reviews from "@/app/restaurant/[slug]/components/Reviews";
 import ReservationCard from "@/app/restaurant/[slug]/components/ReservationCard";
 import {Metadata} from "next";
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient;
+
+interface Restaurant {
+	id: number,
+	name: string,
+	images: string[],
+	description: string,
+	slug: string
+}
+
+const fetchRestaurantBySlug = async (slug: string): Promise<Restaurant> => {
+	const restaurant =   prisma.restaurant.findUnique({
+		where: {
+			slug
+		},
+		select: {
+			id: true,
+			name: true,
+			description: true,
+			images: true,
+			slug: true
+		}
+	});
+	
+	if (!restaurant) {
+		throw new Error();
+	}
+	
+	// @ts-ignore
+	return restaurant;
+}
 
 
 export const metadata: Metadata = {
@@ -14,16 +47,19 @@ export const metadata: Metadata = {
 	description: "The search page of the OpenTables system"
 }
 
-
-const RestaurantDetails = () => {
+const RestaurantDetails = async ({params}: {params:{slug: string}}) => {
+	const restaurant = await fetchRestaurantBySlug(params.slug);
+	
+	console.log(restaurant);
+	
 	return (
 		<>
 			<div className="bg-white w-[70%] rounded p-3 shadow">
-				<RestaurantNavBar/>
-				<Title/>
+				<RestaurantNavBar slug={restaurant.slug}/>
+				<Title title={restaurant.name}/>
 				<Ratings/>
-				<Description/>
-				<Images/>
+				<Description description={restaurant.description}/>
+				<Images images={restaurant.images}/>
 				<Reviews/>
 			</div>
 			<div className="w-[27%] relative text-reg">
