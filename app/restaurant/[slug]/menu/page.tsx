@@ -1,27 +1,40 @@
 import React from 'react';
-import Link from "next/link";
-import NavBar from "@/app/components/NavBar";
-import Header from "@/app/restaurant/[slug]/components/Header";
 import RestaurantNavBar from "@/app/restaurant/[slug]/components/RestaurantNavBar";
 import Menu from "@/app/restaurant/[slug]/components/Menu";
+import {Metadata} from "next";
+import { PrismaClient } from '@prisma/client';
 
-const RestaurantMenu = () => {
-	return (
-		<main className="bg-gray-100 min-h-screen w-screen">
-			<main className="max-w-screen-2xl m-auto bg-white">
-				<NavBar/>
-				<Header/>
-				{/* DESCRIPTION PORTION */}
-				<div className="flex m-auto w-2/3 justify-between items-start 0 -mt-11">
-					<div className="bg-white w-[100%] rounded p-3 shadow">
-						<RestaurantNavBar/>
-						<Menu/>
-					</div>
-				</div>
-				{/* DESCRIPTION PORTION */}
-			</main>
-		</main>
+export const metadata: Metadata = {
+	title: "Menu of Milestone Grill (Toronto)"
+}
+
+const prisma = new PrismaClient;
+
+const fetchItems = async (slug:string) => {
+	const restaurant = await prisma.restaurant.findUnique({
+		where: {
+			slug
+		},
+		select: {
+			items: true
+		}
+	});
 	
+	if (!restaurant) {
+		throw new Error();
+	}
+	
+	return restaurant.items;
+}
+
+const RestaurantMenu = async ({params}: {params:{slug: string}}) => {
+	const menu = await fetchItems(params.slug);
+	// console.log(menu);
+	return (
+		<div className="bg-white w-[100%] rounded p-3 shadow">
+			<RestaurantNavBar slug={params.slug}/>
+			<Menu menu={menu}/>
+		</div>
 	);
 };
 
