@@ -18,7 +18,7 @@ const fetchItems = async (slug:string) => {
 		select: {
 			items: true
 		}
-	})
+	});
 	
 	if (!restaurant) {
 		throw new Error();
@@ -26,9 +26,10 @@ const fetchItems = async (slug:string) => {
 	
 	return restaurant.items;
 }
+
 const RestaurantMenu = async ({params}: {params:{slug: string}}) => {
 	const menu = await fetchItems(params.slug);
-	console.log(menu);
+	// console.log(menu);
 	return (
 		<div className="bg-white w-[100%] rounded p-3 shadow">
 			<RestaurantNavBar slug={params.slug}/>

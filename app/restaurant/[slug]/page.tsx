@@ -8,6 +8,12 @@ import Reviews from "@/app/restaurant/[slug]/components/Reviews";
 import ReservationCard from "@/app/restaurant/[slug]/components/ReservationCard";
 import {Metadata} from "next";
 import { PrismaClient } from '@prisma/client';
+import {Review} from ".prisma/client";
+
+export const metadata: Metadata = {
+	title: "Millstone Grill(Toronto)",
+	description: "The search page of the OpenTables system"
+}
 
 const prisma = new PrismaClient;
 
@@ -17,6 +23,7 @@ interface Restaurant {
 	images: string[],
 	description: string,
 	slug: string
+	reviews: Review[]
 }
 
 const fetchRestaurantBySlug = async (slug: string): Promise<Restaurant> => {
@@ -29,7 +36,8 @@ const fetchRestaurantBySlug = async (slug: string): Promise<Restaurant> => {
 			name: true,
 			description: true,
 			images: true,
-			slug: true
+			slug: true,
+			reviews: true
 		}
 	});
 	
@@ -42,25 +50,21 @@ const fetchRestaurantBySlug = async (slug: string): Promise<Restaurant> => {
 }
 
 
-export const metadata: Metadata = {
-	title: "Millstone Grill(Toronto)",
-	description: "The search page of the OpenTables system"
-}
 
 const RestaurantDetails = async ({params}: {params:{slug: string}}) => {
 	const restaurant = await fetchRestaurantBySlug(params.slug);
 	
-	console.log(restaurant);
+	console.log(restaurant.reviews);
 	
 	return (
 		<>
 			<div className="bg-white w-[70%] rounded p-3 shadow">
 				<RestaurantNavBar slug={restaurant.slug}/>
 				<Title title={restaurant.name}/>
-				<Ratings/>
+				<Ratings reviews={restaurant.reviews}/>
 				<Description description={restaurant.description}/>
 				<Images images={restaurant.images}/>
-				<Reviews/>
+				<Reviews reviews={restaurant.reviews}/>
 			</div>
 			<div className="w-[27%] relative text-reg">
 				<ReservationCard/>

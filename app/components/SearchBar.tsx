@@ -24,7 +24,8 @@ const SearchBar = () => {
 				"
 				onClick={() => {
 					if (location === "banana") return;
-					router.push("/search")
+					router.push(`/search?city=${location}`);
+					setLocation('');
 				}}
 			>
 				Let's go

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 	description: 'A restaurant reservation system',
 }
 
+
 const RestaurantLayout = (
 	{
 		children,
