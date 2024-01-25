@@ -10,7 +10,7 @@ const Loading = () => {
 					<div key={num}
 						 className="
 						 	animate-pulse
-						 	bg-slate-200
+						 	bg-slate-300
 						 	w-64 h-72 m-3
 						 	rounded
 						 	overflow-hidden

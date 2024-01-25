@@ -49,12 +49,8 @@ const fetchRestaurantBySlug = async (slug: string): Promise<Restaurant> => {
 	return restaurant;
 }
 
-
-
 const RestaurantDetails = async ({params}: {params:{slug: string}}) => {
 	const restaurant = await fetchRestaurantBySlug(params.slug);
-	
-	console.log(restaurant.reviews);
 	
 	return (
 		<>
