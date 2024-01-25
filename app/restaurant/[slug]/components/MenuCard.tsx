@@ -9,7 +9,7 @@ const MenuCard = ({item}:{item: Item}) => {
 			<p className="font-light mt-1 text-sm">
 				{description}
 			</p>
-			<p className="mt-7">${price}</p>
+			<p className="mt-7">{price}</p>
 		</div>
 	);
 };
