@@ -9,6 +9,7 @@ import {calculateReviewRatingAverage} from "@/utils/calculateREviewRatingAverage
 
 const Stars = ({reviews, rating}:{reviews: Review[], rating?: number}) => {
 	const reviewRating = rating || calculateReviewRatingAverage(reviews);
+	
 	const renderStars = () => {
 		const starts = [];
 		for (let i = 0; i < 5; i++) {
