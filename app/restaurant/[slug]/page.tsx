@@ -9,6 +9,7 @@ import ReservationCard from "@/app/restaurant/[slug]/components/ReservationCard"
 import {Metadata} from "next";
 import { PrismaClient } from '@prisma/client';
 import {Review} from ".prisma/client";
+import {notFound} from "next/navigation";
 
 export const metadata: Metadata = {
 	title: "Millstone Grill(Toronto)",
@@ -42,7 +43,8 @@ const fetchRestaurantBySlug = async (slug: string): Promise<Restaurant> => {
 	});
 	
 	if (!restaurant) {
-		throw new Error("Cannot find restaurant");
+		// throw new Error("Cannot find restaurant");
+		notFound()
 	}
 	
 	// @ts-ignore
